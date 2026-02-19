@@ -1,0 +1,39 @@
+# Export files
+*.csv
+*.xlsx
+
+# PowerShell
+*.ps1xml
+
+# Logs
+*.log
+
+# Temp files
+*.tmp
+*~
+
+# VS Code (allow .vscode/settings.json for shared linter config)
+.vscode/*
+!.vscode/settings.json
+*.code-workspace
+
+# OS generated
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Azure credentials (never commit!)
+*.publishsettings
+*.azureauth
+azureauth.json
+
+# Output directories
+/output/
+/exports/
+/reports/
+
+# Dev folder (keep for local development only)
+/dev/
+
+# GitHub configuration files (settings FOR GitHub, not part of project)
+**/branch-protection*.json
