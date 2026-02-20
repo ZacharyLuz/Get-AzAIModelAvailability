@@ -15,7 +15,7 @@
     Companion tool to Get-AzVMAvailability for VM SKU capacity scanning.
 
 .PARAMETER SubscriptionId
-    Azure subscription ID to scan. If not provided, uses current Az context.
+    One or more Azure subscription IDs to scan. If not provided, uses current Az context.
 
 .PARAMETER Region
     One or more Azure region codes to scan (e.g., 'eastus', 'westus2').
@@ -107,9 +107,9 @@
 
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory = $false, HelpMessage = "Azure subscription ID to scan")]
+    [Parameter(Mandatory = $false, HelpMessage = "Azure subscription ID(s) to scan")]
     [Alias("SubId", "Subscription")]
-    [string]$SubscriptionId,
+    [string[]]$SubscriptionId,
 
     [Parameter(Mandatory = $false, HelpMessage = "Azure region(s) to scan")]
     [Alias("Location")]
@@ -595,10 +595,10 @@ $script:AzureEndpoints = Get-AzureEndpoints -EnvironmentName $script:TargetEnvir
 #endregion Initialize Azure Endpoints
 #region Interactive Prompts
 
-if (-not $SubscriptionId) {
+if (-not $SubscriptionId -or $SubscriptionId.Count -eq 0) {
     $ctx = Get-AzContext -ErrorAction SilentlyContinue
     if ($ctx -and $ctx.Subscription.Id) {
-        $SubscriptionId = $ctx.Subscription.Id
+        $SubscriptionId = @($ctx.Subscription.Id)
         Write-Host "Using current subscription: $($ctx.Subscription.Name)" -ForegroundColor DarkGray
     }
     else {
@@ -650,7 +650,7 @@ Write-Host "`n" -NoNewline
 Write-Host ("=" * $OutputWidth) -ForegroundColor Gray
 Write-Host "GET-AZAIMODELAVAILABILITY v$ScriptVersion" -ForegroundColor Magenta
 Write-Host ("=" * $OutputWidth) -ForegroundColor Gray
-Write-Host "Subscription: $SubscriptionId" -ForegroundColor Cyan
+Write-Host "Subscription(s): $($SubscriptionId -join ', ')" -ForegroundColor Cyan
 Write-Host "Regions: $($Regions -join ', ')" -ForegroundColor Cyan
 
 $filterInfo = @()
@@ -675,27 +675,54 @@ $armUrl = $script:AzureEndpoints.ResourceManagerUrl
 $scanStart = Get-Date
 $allRegionData = @{}
 
-Write-Host "`nScanning AI models in $($Regions.Count) region(s)..." -ForegroundColor Yellow
-
-foreach ($regionCode in $Regions) {
-    try {
-        $models = Get-AIModelData `
-            -Region $regionCode `
-            -SubscriptionId $SubscriptionId `
-            -AccessToken $accessToken `
-            -ArmUrl $armUrl `
-            -ProviderFilter $ProviderFilter `
-            -ModelFilter $ModelFilter `
-            -LifecycleFilter $LifecycleFilter `
-            -DeployTypeFilter $DeploymentType `
-            -MaxRetries $MaxRetries
-
-        $allRegionData[$regionCode] = $models
-        Write-Host "  $($Icons.Check) $regionCode`: $($models.Count) models" -ForegroundColor Green
+foreach ($subId in $SubscriptionId) {
+    if ($SubscriptionId.Count -gt 1) {
+        try {
+            $subObj = Set-AzContext -SubscriptionId $subId -ErrorAction Stop
+            $subName = $subObj.Subscription.Name
+        }
+        catch {
+            Write-Host "  $($Icons.Error) Failed to switch to subscription $subId`: $($_.Exception.Message)" -ForegroundColor Red
+            continue
+        }
+        Write-Host "`nScanning subscription: $subName ($subId)" -ForegroundColor Yellow
+        # Refresh token for new subscription context
+        $tokenObj = Get-AzAccessToken -ResourceUrl "$($script:AzureEndpoints.ResourceManagerUrl)" -AsSecureString
+        $accessToken = [System.Net.NetworkCredential]::new('', $tokenObj.Token).Password
     }
-    catch {
-        Write-Host "  $($Icons.Error) $regionCode`: $($_.Exception.Message)" -ForegroundColor Red
-        $allRegionData[$regionCode] = @()
+
+    Write-Host "Scanning AI models in $($Regions.Count) region(s)..." -ForegroundColor Yellow
+
+    foreach ($regionCode in $Regions) {
+        try {
+            $models = Get-AIModelData `
+                -Region $regionCode `
+                -SubscriptionId $subId `
+                -AccessToken $accessToken `
+                -ArmUrl $armUrl `
+                -ProviderFilter $ProviderFilter `
+                -ModelFilter $ModelFilter `
+                -LifecycleFilter $LifecycleFilter `
+                -DeployTypeFilter $DeploymentType `
+                -MaxRetries $MaxRetries
+
+            # Merge with existing region data (dedup by model name+version+format)
+            if (-not $allRegionData[$regionCode]) { $allRegionData[$regionCode] = @() }
+            foreach ($model in $models) {
+                $key = "$($model.model.format)|$($model.model.name)|$($model.model.version)"
+                $existing = $allRegionData[$regionCode] | Where-Object {
+                    "$($_.model.format)|$($_.model.name)|$($_.model.version)" -eq $key
+                }
+                if (-not $existing) {
+                    $allRegionData[$regionCode] += $model
+                }
+            }
+            Write-Host "  $($Icons.Check) $regionCode`: $($models.Count) models" -ForegroundColor Green
+        }
+        catch {
+            Write-Host "  $($Icons.Error) $regionCode`: $($_.Exception.Message)" -ForegroundColor Red
+            if (-not $allRegionData[$regionCode]) { $allRegionData[$regionCode] = @() }
+        }
     }
 }
 
