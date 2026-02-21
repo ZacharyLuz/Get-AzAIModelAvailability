@@ -67,7 +67,7 @@
     Name:           Get-AzAIModelAvailability
     Author:         Zachary Luz
     Created:        2026-02-19
-    Version:        1.0.0
+    Version:        1.0.1
     License:        MIT
     Repository:     https://github.com/zacharyluz/Get-AzAIModelAvailability
 
@@ -172,7 +172,7 @@ foreach ($paramName in @('SubscriptionId', 'Region', 'ProviderFilter', 'ModelFil
 }
 
 #region Configuration
-$ScriptVersion = "1.0.0"
+$ScriptVersion = "1.0.1"
 
 #region Constants
 $OutputWidth = 113
