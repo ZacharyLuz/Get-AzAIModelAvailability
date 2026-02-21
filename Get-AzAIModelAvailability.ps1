@@ -163,6 +163,14 @@ param(
 $ErrorActionPreference = 'Continue'
 $ProgressPreference = 'SilentlyContinue'
 
+# Normalize string[] params — pwsh -File passes comma-delimited values as a single string
+foreach ($paramName in @('SubscriptionId', 'Region', 'ProviderFilter', 'ModelFilter', 'LifecycleFilter', 'DeploymentType')) {
+    $val = Get-Variable -Name $paramName -ValueOnly -ErrorAction SilentlyContinue
+    if ($val -and $val.Count -eq 1 -and $val[0] -match ',') {
+        Set-Variable -Name $paramName -Value @($val[0] -split ',' | ForEach-Object { $_.Trim().Trim('"', "'") } | Where-Object { $_ })
+    }
+}
+
 #region Configuration
 $ScriptVersion = "1.0.0"
 
