@@ -358,7 +358,7 @@
   <header class="reveal">
     <div class="tag">Repository Analytics</div>
     <h1>Get-AzAIModelAvailability</h1>
-    <p>Apr 5, 2026 at 9:23 PM &middot; 2026-03-22 — 2026-04-04</p>
+    <p>Apr 5, 2026 at 9:28 PM &middot; 2026-03-22 — 2026-04-04</p>
   </header>  <div class="metrics reveal d1">
     <div class="metric">
       <div class="m-label" id="hdr-views-label">Views (All Time)</div>
@@ -497,7 +497,7 @@
 const allData = {
   views:  { dates: ["2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-03","2026-04-04"], total: [0,0,0,0,2,0,0,0,0,0,4,0,1,2], unique: [0,0,0,0,1,0,0,0,0,0,2,0,1,2] },
   clones: { dates: ["2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-03","2026-04-04"], total: [1,1,1,0,0,0,0,1,0,0,2,0,0,1], unique: [1,1,1,0,0,0,0,1,0,0,2,0,0,1] },
-  stars:  { dates: "2026-03-13", cumulative: 1, users: "tyleris-irish" }
+  stars:  { dates: ["2026-03-13"], cumulative: [1], users: ["tyleris-irish"] }
 };
 
 // ── Custom tooltip (dark card with colored dots) ──
@@ -858,10 +858,10 @@ updateMetrics(0);
 new Chart(document.getElementById('referrersChart'), {
   type: 'bar',
   data: {
-    labels: "github.com",
+    labels: ["github.com"],
     datasets: [
-      { label: 'Views', data: 5, backgroundColor: 'rgba(59,130,246,0.5)', borderRadius: 4, borderSkipped: false },
-      { label: 'Unique', data: 2, backgroundColor: 'rgba(34,197,94,0.4)', borderRadius: 4, borderSkipped: false }
+      { label: 'Views', data: [5], backgroundColor: 'rgba(59,130,246,0.5)', borderRadius: 4, borderSkipped: false },
+      { label: 'Unique', data: [2], backgroundColor: 'rgba(34,197,94,0.4)', borderRadius: 4, borderSkipped: false }
     ]
   },
   options: { responsive: true, indexAxis: 'y',
