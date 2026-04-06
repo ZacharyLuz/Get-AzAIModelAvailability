@@ -358,19 +358,19 @@
   <header class="reveal">
     <div class="tag">Repository Analytics</div>
     <h1>Get-AzAIModelAvailability</h1>
-    <p>Apr 6, 2026 at 3:31 AM &middot; 2026-03-22 — 2026-04-04</p>
+    <p>Apr 6, 2026 at 1:39 PM &middot; 2026-03-22 — 2026-04-05</p>
   </header>  <div class="metrics reveal d1">
     <div class="metric">
       <div class="m-label" id="hdr-views-label">Views (All Time)</div>
-      <div class="m-value" id="hdr-views-value">9</div>
-      <div class="m-sub" id="hdr-views-sub">6 unique</div>
-      <div class="m-delta up" id="hdr-views-delta">&#8593; 250% WoW</div>
+      <div class="m-value" id="hdr-views-value">13</div>
+      <div class="m-sub" id="hdr-views-sub">8 unique</div>
+      <div class="m-delta up" id="hdr-views-delta">&#8593; 450% WoW</div>
     </div>
     <div class="metric">
       <div class="m-label" id="hdr-clones-label">Clones (All Time)</div>
-      <div class="m-value" id="hdr-clones-value">7</div>
-      <div class="m-sub" id="hdr-clones-sub">7 unique</div>
-      <div class="m-delta up" id="hdr-clones-delta">&#8593; 33% WoW</div>
+      <div class="m-value" id="hdr-clones-value">101</div>
+      <div class="m-sub" id="hdr-clones-sub">40 unique</div>
+      <div class="m-delta up" id="hdr-clones-delta">&#8593; 3167% WoW</div>
     </div>
     <div class="metric">
       <div class="m-label">Stars</div>
@@ -452,14 +452,14 @@
   </div>  <div class="chart-card reveal d2">
     <div class="chart-header">
       <div class="ch-left"><h3>Page Views</h3><div class="ch-sub">Daily views and unique visitors</div></div>
-      <div class="ch-right"><div class="ch-stat-label">Total Views</div><div class="ch-stat-value" id="viewsStat">9</div></div>
+      <div class="ch-right"><div class="ch-stat-label">Total Views</div><div class="ch-stat-value" id="viewsStat">13</div></div>
     </div>
     <canvas id="viewsChart"></canvas>
   </div>
   <div class="chart-card reveal d3">
     <div class="chart-header">
       <div class="ch-left"><h3>Git Clones</h3><div class="ch-sub">Daily clones and unique cloners</div></div>
-      <div class="ch-right"><div class="ch-stat-label">Total Clones</div><div class="ch-stat-value" id="clonesStat">7</div></div>
+      <div class="ch-right"><div class="ch-stat-label">Total Clones</div><div class="ch-stat-value" id="clonesStat">101</div></div>
     </div>
     <canvas id="clonesChart"></canvas>
   </div>
@@ -495,8 +495,8 @@
 </div><script src="dashboard.js"></script>
 <script>
 var allData = {
-  views:  { dates: ["2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-03","2026-04-04"], total: [0,0,0,0,2,0,0,0,0,0,4,0,1,2], unique: [0,0,0,0,1,0,0,0,0,0,2,0,1,2] },
-  clones: { dates: ["2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-03","2026-04-04"], total: [1,1,1,0,0,0,0,1,0,0,2,0,0,1], unique: [1,1,1,0,0,0,0,1,0,0,2,0,0,1] },
+  views:  { dates: ["2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-03","2026-04-04","2026-04-05"], total: [0,0,0,0,2,0,0,0,0,0,4,0,1,2,4], unique: [0,0,0,0,1,0,0,0,0,0,2,0,1,2,2] },
+  clones: { dates: ["2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-03","2026-04-04","2026-04-05"], total: [1,1,1,0,0,0,0,1,0,0,2,0,0,1,94], unique: [1,1,1,0,0,0,0,1,0,0,2,0,0,1,33] },
   stars:  { dates: ["2026-03-13"], cumulative: [1], users: ["tyleris-irish"] }
 };
 var refData = { labels: ["github.com"], views: [5], uniques: [2] };
