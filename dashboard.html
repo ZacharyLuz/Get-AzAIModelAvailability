@@ -60,7 +60,7 @@
 
   .page {
     position: relative; z-index: 1;
-    max-width: 1400px; margin: 0 auto; padding: 0 32px 48px;
+    max-width: 1800px; margin: 0 auto; padding: 0 32px 48px;
   }
 
   /* Header */
@@ -238,6 +238,7 @@
     transition: background 0.15s, border-color 0.15s;
   }
   .range-btn:hover { background: var(--surface-raised); border-color: rgba(255,255,255,0.12); }
+  .range-btn.active-toggle { background: rgba(59,130,246,0.15); border-color: rgba(59,130,246,0.4); color: #60a5fa; }
   .range-btn .cal-icon { font-size: 14px; }
   .range-btn .arrow { font-size: 10px; color: var(--text-3); }
   .range-menu {
@@ -358,19 +359,19 @@
   <header class="reveal">
     <div class="tag">Repository Analytics</div>
     <h1>Get-AzAIModelAvailability</h1>
-    <p>Apr 15, 2026 at 1:57 PM &middot; 2026-03-22 — 2026-04-14</p>
+    <p>Apr 23, 2026 at 3:36 AM &middot; 2026-03-22 — 2026-04-21</p>
   </header>  <div class="metrics reveal d1">
     <div class="metric">
       <div class="m-label" id="hdr-views-label">Views (All Time)</div>
-      <div class="m-value" id="hdr-views-value">17</div>
-      <div class="m-sub" id="hdr-views-sub">12 unique</div>
-      <div class="m-delta down" id="hdr-views-delta">&#8595; -64% WoW</div>
+      <div class="m-value" id="hdr-views-value">66</div>
+      <div class="m-sub" id="hdr-views-sub">32 unique</div>
+      <div class="m-delta up" id="hdr-views-delta">&#8593; 1567% WoW</div>
     </div>
     <div class="metric">
       <div class="m-label" id="hdr-clones-label">Clones (All Time)</div>
-      <div class="m-value" id="hdr-clones-value">280</div>
-      <div class="m-sub" id="hdr-clones-sub">122 unique</div>
-      <div class="m-delta down" id="hdr-clones-delta">&#8595; -10% WoW</div>
+      <div class="m-value" id="hdr-clones-value">379</div>
+      <div class="m-sub" id="hdr-clones-sub">165 unique</div>
+      <div class="m-delta down" id="hdr-clones-delta">&#8595; -7% WoW</div>
     </div>
     <div class="metric">
       <div class="m-label">Stars</div>
@@ -390,12 +391,12 @@
     <div class="metric">
       <div class="m-label">Top Source</div>
       <div class="m-value" style="font-size:20px;margin-top:2px">github.com</div>
-      <div class="m-sub">10 views</div>
+      <div class="m-sub">18 views</div>
     </div>
     <div class="metric">
-      <div class="m-label">Sources</div>
-      <div class="m-value">1</div>
-      <div class="m-sub">referrers</div>
+      <div class="m-label">PSGallery</div>
+      <div class="m-value">0</div>
+      <div class="m-sub">— &middot; 0 ver. installs</div>
     </div>
   </div>  <div class="insights reveal d1">
     <div class="insight-card">
@@ -449,17 +450,21 @@
         <div class="range-opt active" data-days="0" onclick="setRange(0, this)">All Time <span class="check">&#x2713;</span></div>
       </div>
     </div>
+    <button class="range-btn" id="releaseToggle" onclick="toggleReleases()" title="Show/hide release version lines on charts">
+      <span>&#x1F3F7;&#xFE0F;</span>
+      <span id="releaseToggleLabel">Releases</span>
+    </button>
   </div>  <div class="chart-card reveal d2">
     <div class="chart-header">
       <div class="ch-left"><h3>Page Views</h3><div class="ch-sub">Daily views and unique visitors</div></div>
-      <div class="ch-right"><div class="ch-stat-label">Total Views</div><div class="ch-stat-value" id="viewsStat">17</div></div>
+      <div class="ch-right"><div class="ch-stat-label">Total Views</div><div class="ch-stat-value" id="viewsStat">66</div></div>
     </div>
     <canvas id="viewsChart"></canvas>
   </div>
   <div class="chart-card reveal d3">
     <div class="chart-header">
       <div class="ch-left"><h3>Git Clones</h3><div class="ch-sub">Daily clones and unique cloners</div></div>
-      <div class="ch-right"><div class="ch-stat-label">Total Clones</div><div class="ch-stat-value" id="clonesStat">280</div></div>
+      <div class="ch-right"><div class="ch-stat-label">Total Clones</div><div class="ch-stat-value" id="clonesStat">379</div></div>
     </div>
     <canvas id="clonesChart"></canvas>
   </div>
@@ -472,15 +477,22 @@
   </div>
   <div class="chart-card reveal d4">
     <div class="chart-header">
+      <div class="ch-left"><h3>PSGallery Downloads</h3><div class="ch-sub">Cumulative install count from PowerShell Gallery</div></div>
+      <div class="ch-right"><div class="ch-stat-label">Total Installs</div><div class="ch-stat-value" id="psGalleryStat">0</div></div>
+    </div>
+    <canvas id="psGalleryChart"></canvas>
+  </div>
+  <div class="chart-card reveal d4">
+    <div class="chart-header">
       <div class="ch-left"><h3>Top Referrers</h3><div class="ch-sub">Traffic sources over last 14 days</div></div>
-      <div class="ch-right"><div class="ch-stat-label">Sources</div><div class="ch-stat-value">1</div></div>
+      <div class="ch-right"><div class="ch-stat-label">Sources</div><div class="ch-stat-value">3</div></div>
     </div>
     <canvas id="referrersChart"></canvas>
   </div>
   <div class="chart-card reveal d5">
     <div class="chart-header">
       <div class="ch-left"><h3>Popular Content</h3><div class="ch-sub">Most visited pages</div></div>
-      <div class="ch-right"><div class="ch-stat-label">Pages Tracked</div><div class="ch-stat-value">4</div></div>
+      <div class="ch-right"><div class="ch-stat-label">Pages Tracked</div><div class="ch-stat-value">10</div></div>
     </div>
     <canvas id="pathsChart"></canvas>
   </div>  <div class="stars-section reveal d4">
@@ -495,12 +507,14 @@
 </div><script src="dashboard.js"></script>
 <script>
 var allData = {
-  views:  { dates: ["2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-03","2026-04-04","2026-04-05","2026-04-06","2026-04-07","2026-04-08","2026-04-09","2026-04-10","2026-04-11","2026-04-12","2026-04-13","2026-04-14"], total: [0,0,0,0,2,0,0,0,0,0,4,0,1,2,4,0,1,1,1,0,0,0,0,1], unique: [0,0,0,0,1,0,0,0,0,0,2,0,1,2,2,0,1,1,1,0,0,0,0,1] },
-  clones: { dates: ["2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-03","2026-04-04","2026-04-05","2026-04-06","2026-04-07","2026-04-08","2026-04-09","2026-04-10","2026-04-11","2026-04-12","2026-04-13","2026-04-14"], total: [1,1,1,0,0,0,0,1,0,0,2,0,0,1,94,48,7,13,8,37,13,34,7,12], unique: [1,1,1,0,0,0,0,1,0,0,2,0,0,1,33,24,2,6,3,16,7,15,2,7] },
-  stars:  { dates: ["2026-03-13"], cumulative: [1], users: ["tyleris-irish"] }
+  views:  { dates: ["2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-03","2026-04-04","2026-04-05","2026-04-06","2026-04-07","2026-04-08","2026-04-09","2026-04-10","2026-04-11","2026-04-12","2026-04-13","2026-04-14","2026-04-15","2026-04-16","2026-04-17","2026-04-18","2026-04-19","2026-04-20","2026-04-21"], total: [0,0,0,0,2,0,0,0,0,0,4,0,1,2,4,0,1,1,1,0,0,0,0,1,30,14,1,0,0,0,4], unique: [0,0,0,0,1,0,0,0,0,0,2,0,1,2,2,0,1,1,1,0,0,0,0,1,12,4,1,0,0,0,3] },
+  clones: { dates: ["2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-03","2026-04-04","2026-04-05","2026-04-06","2026-04-07","2026-04-08","2026-04-09","2026-04-10","2026-04-11","2026-04-12","2026-04-13","2026-04-14","2026-04-15","2026-04-16","2026-04-17","2026-04-18","2026-04-19","2026-04-20","2026-04-21"], total: [1,1,1,0,0,0,0,1,0,0,2,0,0,1,94,48,7,13,8,37,13,34,7,12,14,57,6,6,8,4,4], unique: [1,1,1,0,0,0,0,1,0,0,2,0,0,1,33,24,2,6,3,16,7,15,2,7,5,28,1,3,4,1,1] },
+  stars:  { dates: ["2026-03-13"], cumulative: [1], users: ["tyleris-irish"] },
+  psGallery: { dates: , totalDl:  },
+  releases: 
 };
-var refData = { labels: ["github.com"], views: [10], uniques: [2] };
-var pathData = { labels: ["/","/graphs/traffic","/pulse","/"], views: [9,2,2,1] };
+var refData = { labels: ["github.com","statics.teams.cdn.office.net","Bing"], views: [18,16,1], uniques: [2,10,1] };
+var pathData = { labels: ["/","/deployments/github-pages","/pull/7","/pulls","/blob/main/Get-AzAIModelAvailability.ps1","/blob/main/Protect_Main_Branch.json","/branches","/deployments","/tree/main/.github","/tree/main/tests"], views: [36,4,2,2,1,1,1,1,1,1] };
 initDashboard(allData, refData, pathData);
 </script>
 </body>
