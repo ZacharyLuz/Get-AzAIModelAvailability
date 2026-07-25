@@ -359,7 +359,7 @@
   <header class="reveal">
     <div class="tag">Repository Analytics</div>
     <h1>Get-AzAIModelAvailability</h1>
-    <p>Jul 24, 2026 at 2:01 PM &middot; 2026-03-22 — 2026-07-23</p>
+    <p>Jul 25, 2026 at 3:28 AM &middot; 2026-03-22 — 2026-07-23</p>
   </header>  <div class="metrics reveal d1">
     <div class="metric">
       <div class="m-label" id="hdr-views-label">Views (All Time)</div>
@@ -390,7 +390,7 @@
     </div>
     <div class="metric">
       <div class="m-label">Top Source</div>
-      <div class="m-value" style="font-size:20px;margin-top:2px">microsoft.sharepoint.com</div>
+      <div class="m-value" style="font-size:20px;margin-top:2px">Bing</div>
       <div class="m-sub">3 views</div>
     </div>
     <div class="metric">
@@ -485,14 +485,14 @@
   <div class="chart-card reveal d4">
     <div class="chart-header">
       <div class="ch-left"><h3>Top Referrers</h3><div class="ch-sub">Traffic sources over last 14 days</div></div>
-      <div class="ch-right"><div class="ch-stat-label">Sources</div><div class="ch-stat-value">1</div></div>
+      <div class="ch-right"><div class="ch-stat-label">Sources</div><div class="ch-stat-value">2</div></div>
     </div>
     <canvas id="referrersChart"></canvas>
   </div>
   <div class="chart-card reveal d5">
     <div class="chart-header">
       <div class="ch-left"><h3>Popular Content</h3><div class="ch-sub">Most visited pages</div></div>
-      <div class="ch-right"><div class="ch-stat-label">Pages Tracked</div><div class="ch-stat-value">1</div></div>
+      <div class="ch-right"><div class="ch-stat-label">Pages Tracked</div><div class="ch-stat-value">2</div></div>
     </div>
     <canvas id="pathsChart"></canvas>
   </div>  <div class="stars-section reveal d4">
@@ -514,8 +514,8 @@ var allData = {
   psGallery: { dates: [], totalDl: [] },
   releases: []
 };
-var refData = { labels: ["microsoft.sharepoint.com"], views: [3], uniques: [2] };
-var pathData = { labels: ["/"], views: [3] };
+var refData = { labels: ["Bing","microsoft.sharepoint.com"], views: [3,1], uniques: [1,1] };
+var pathData = { labels: ["/","/blob/main/Get-AzAIModelAvailability.ps1"], views: [3,1] };
 initDashboard(allData, refData, pathData);
 </script>
 </body>
